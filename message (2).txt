@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Comigo?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #fefae0;
+      overflow: hidden;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-size: 1.5rem;
+      padding: 15px 30px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    #yes {
+      background-color: #8bc34a;
+      color: white;
+    }
+
+    #no {
+      background-color: #f44336;
+      color: white;
+      position: absolute;
+    }
+
+    #no:hover {
+      background-color: #d32f2f;
+    }
+
+    #yes:hover {
+      background-color: #7cb342;
+    }
+
+    .cat {
+      display: none;
+      margin-top: 20px;
+      width: 150px;
+      animation: dance 1s infinite alternate;
+    }
+
+    @keyframes dance {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #ff6f61;
+      top: -50px;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Casa comigo?</h1>
+  <button id="yes">Sim</button>
+  <button id="no">Não</button>
+  <img class="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Gatinho dançando">
+
+  <script>
+    const yesButton = document.getElementById('yes');
+    const noButton = document.getElementById('no');
+    const cat = document.querySelector('.cat');
+
+    // Função para mover o botão "Não"
+    noButton.addEventListener('mouseover', moveButton);
+    noButton.addEventListener('touchstart', moveButton);
+
+    function moveButton() {
+      const maxWidth = window.innerWidth - noButton.offsetWidth;
+      const maxHeight = window.innerHeight - noButton.offsetHeight;
+      const randomX = Math.floor(Math.random() * maxWidth);
+      const randomY = Math.floor(Math.random() * maxHeight);
+
+      noButton.style.left = `${randomX}px`;
+      noButton.style.top = `${randomY}px`;
+    }
+
+    // Função ao clicar no botão "Sim"
+    yesButton.addEventListener('click', () => {
+      cat.style.display = 'block';
+      launchConfetti();
+      alert('Aeeee, agora somos noivos!');
+    });
+
+    // Função para lançar confetes
+    function launchConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.backgroundColor = getRandomColor();
+        document.body.appendChild(confetti);
+
+        // Remover confetes após a animação
+        confetti.addEventListener('animationend', () => {
+          confetti.remove();
+        });
+      }
+    }
+
+    // Função para gerar cores aleatórias
+    function getRandomColor() {
+      const colors = ['#ff6f61', '#ffeb3b', '#4caf50', '#2196f3', '#9c27b0'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+</body>
+</html>
